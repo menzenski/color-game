@@ -21,6 +21,7 @@ function init() {
 
     configModeButtons();
     configSquares();
+    resetColors();
 }
 
 /*
