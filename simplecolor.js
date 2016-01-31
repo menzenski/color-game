@@ -8,6 +8,20 @@ var colorName = document.getElementById("color-name");
 var modeButtons = document.querySelectorAll(".mode");
 var buttonEasy = document.getElementById("easy-btn");
 var buttonHard = document.getElementById("hard-btn");
+var modeButtons = document.querySelectorAll(".mode");
+
+init();
+
+/*
+ * set up the page
+ */
+function init() {
+    resetButton.addEventListener("click", resetColors);
+    colorName.textContent = chosenColor;
+
+    configModeButtons();
+    configSquares();
+}
 
 /*
  * return a random value between 0 and 255, inclusive
@@ -49,7 +63,12 @@ function resetColors() {
     chosenColor = chooseColor(colors);
     colorName.textContent = chosenColor;
     for (var i = 0; i < squares.length; i++) {
-        squares[i].style.background = colors[i];
+        if (colors[i]) {
+            squares[i].style.display = "block";
+            squares[i].style.background = colors[i];
+        } else {
+            squares[i].style.display = "none";
+        }
         colorName.style.background = "steelblue";
         document.querySelector("h1").style.background = "steelblue";
         respo.textContent = "";
@@ -69,52 +88,36 @@ function changeColorsOnWin (color) {
 };
 
 
-
-resetButton.addEventListener("click", resetColors);
-
-colorName.textContent = chosenColor;
-
-for (var i = 0; i < squares.length; i++) {
-  squares[i].style.background = colors[i];
-  squares[i].addEventListener("click", function () {
-    if (this.style.background === chosenColor) {
-      resetButton.textContent = "Play again";
-      respo.textContent = "You win!";
-      changeColorsOnWin(this.style.background);
-    } else {
-      this.style.background = "#232323";
-      respo.textContent = "Try again";
+/*
+ * add event listeners to mode buttons
+ * */
+function configModeButtons() {
+    for (var i = 0; i < modeButtons.length; i++) {
+        modeButtons[i].addEventListener("click", function () {
+            modeButtons[0].classList.remove("selected");
+            modeButtons[1].classList.remove("selected");
+            this.classList.add("selected");
+            this.textContent === "Easy" ? numSquares = 3: numSquares = 6;
+            resetColors();
+        });
     }
-  });
 }
 
-
-
-buttonEasy.addEventListener("click", function() {
-    numSquares = 3;
-    buttonEasy.classList.add("selected");
-    buttonHard.classList.remove("selected");
-    colors = generateRandomColors(numSquares);
-    chosenColor = chooseColor(colors);
-    colorName.textContent = chosenColor;
-    for (var i = 0; i < squares.length; i++) {
-        if (colors[i]) {
-            squares[i].style.background = colors[i];
-        } else {
-            squares[i].style.display = "none";
-        }
-    }
-});
-
-buttonHard.addEventListener("click", function() {
-    numSquares = 6;
-    buttonHard.classList.add("selected");
-    buttonEasy.classList.remove("selected");
-    colors = generateRandomColors(numSquares);
-    chosenColor = chooseColor(colors);
-    colorName.textContent = chosenColor;
+/*
+ * set up squares with colors and event listeners
+ * */
+function configSquares() {
     for (var i = 0; i < squares.length; i++) {
         squares[i].style.background = colors[i];
-        squares[i].style.display = "block";
+        squares[i].addEventListener("click", function () {
+            if (this.style.background === chosenColor) {
+                resetButton.textContent = "Play again";
+                respo.textContent = "You win!";
+                changeColorsOnWin(this.style.background);
+            } else {
+                this.style.background = "#232323";
+                respo.textContent = "Try again";
+            }
+        });
     }
-});
+}
