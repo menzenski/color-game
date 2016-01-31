@@ -91,10 +91,6 @@ function changeColorsOnWin (color) {
   document.querySelector("h1").style.background = color;
 };
 
-
-buttonHelp
-helpMessage
-
 /*
  * setup help button to display help message when pressed
  * */
