@@ -9,6 +9,8 @@ var modeButtons = document.querySelectorAll(".mode");
 var buttonEasy = document.getElementById("easy-btn");
 var buttonHard = document.getElementById("hard-btn");
 var modeButtons = document.querySelectorAll(".mode");
+var buttonHelp = document.getElementById("help-btn");
+var helpMessage = document.getElementById("help-msg");
 
 init();
 
@@ -20,6 +22,7 @@ function init() {
     colorName.textContent = chosenColor;
 
     configModeButtons();
+    configHelp();
     configSquares();
     resetColors();
 }
@@ -88,6 +91,22 @@ function changeColorsOnWin (color) {
   document.querySelector("h1").style.background = color;
 };
 
+
+buttonHelp
+helpMessage
+
+/*
+ * setup help button to display help message when pressed
+ * */
+function configHelp() {
+    buttonHelp.addEventListener("click", function() {
+        if (helpMessage.style.display === 'block') {
+            helpMessage.style.display = 'none';
+        } else {
+            helpMessage.style.display = 'block';
+        }
+    });
+}
 
 /*
  * add event listeners to mode buttons
